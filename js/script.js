@@ -1,8 +1,10 @@
 //https://www.youtube.com/watch?v=lhNdUVh3qCc&t=115s
+// BUG EN EL TUTORIAL. SI HACES CLICK SOBRE LA CARTA DETAPADA TE SALE ACIERTO
+
 
 document.addEventListener("DOMContentLoaded", () => {
   //Se dispara antes de que el html haya acabado de cargar
-  const cardArray = [
+  const cardArray = [ //Creamos el array de cartas
     { name: "brocoli", img: "img/brocoli.png" },
     { name: "brocoli", img: "img/brocoli.png" },
     { name: "burrito", img: "img/burrito.png" },
@@ -21,22 +23,22 @@ document.addEventListener("DOMContentLoaded", () => {
     { name: "pizza", img: "img/pizza.png" },
   ];
 
-  cardArray.sort(() => 0.5 - Math.random());
+  cardArray.sort(() => 0.5 - Math.random()); //ordeno el Array de forma aleatoria
 
-  const grid = document.querySelector(".grid");
-  const resultDisplay = document.querySelector("#result");
-  let cardsChosen = [];
-  let cardsChosenId = [];
-  let cardsWon = [];
+  const grid = document.querySelector(".grid"); //asigno el div grid a una variable para poder cambiar propiedades
+  const resultDisplay = document.querySelector("#result");//asigno el div con id result a una constante
+  let cardsChosen = [];//Array de nombres de las cartas elegidas
+  let cardsChosenId = [];//Array de id de cada carta (del 0 al 15)
+  let cardsWon = [];//Array de pareja acertada
 
   //create your board
   function createBoard() {
     for (let i = 0; i < cardArray.length; i++) {
       const card = document.createElement("img");
-      card.setAttribute("src", "img/blank.png");
-      card.setAttribute("data-id", i);
-      card.addEventListener("click", flipCard);
-      grid.appendChild(card);
+      card.setAttribute("src", "img/blank.png"); //pongo la imagen de carta cubierta en cada carta
+      card.setAttribute("data-id", i); //asigno una id a cada carta del array
+      card.addEventListener("click", flipCard); //Agrega el listener a cada carta. Si hago click, llamo a la función f,ipCard()
+      grid.appendChild(card); //agrego el <img> de la carta a mi div de clase grid
     }
   }
 
@@ -46,101 +48,41 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
 
-    if (optionOneId == optionTwoId) {
+    if (optionOneId == optionTwoId) { //Si HAGO CLICK SOBRE LA CARTA DESTAPADA, LA VUELVE A TAPAR
       cards[optionOneId].setAttribute("src", "img/blank.png");
       cards[optionTwoId].setAttribute("src", "img/blank.png");
-      alert("You have clicked the same image!");
-    } else if (cardsChosen[0] === cardsChosen[1]) {
-      alert("You found a match");
-      cards[optionOneId].setAttribute("src", "img/white.png");
+      // alert("BIEN HECHO!");
+    } else if (cardsChosen[0] === cardsChosen[1]) {// Si las ID's son diferentes, pero el nombre es el mismo, he encontrado pareja
+      alert("BIEN HECHO");
+      cards[optionOneId].setAttribute("src", "img/white.png"); //quito las fotos
       cards[optionTwoId].setAttribute("src", "img/white.png");
-      cards[optionOneId].removeEventListener("click", flipCard);
+      cards[optionOneId].removeEventListener("click", flipCard);//quito la escucha, si hago click en el espacio en blanco, ya no pasa nada
       cards[optionTwoId].removeEventListener("click", flipCard);
       cardsWon.push(cardsChosen);
     } else {
-      cards[optionOneId].setAttribute("src", "img/blank.png");
+      cards[optionOneId].setAttribute("src", "img/blank.png"); //si no son acierto, le doy la vuelta a las cartas
       cards[optionTwoId].setAttribute("src", "img/blank.png");
-      alert("Sorry, try again");
+      alert("Lo siento, no coinciden");
     }
-    cardsChosen = [];
-    cardsChosenId = [];
-    resultDisplay.textContent = cardsWon.length;
-    if (cardsWon.length === cardArray.length / 2) {
-      resultDisplay.textContent = "Congratulations! You found them all!";
+    cardsChosen = []; //borro el contenido de array de nombres
+    cardsChosenId = []; //borro el contenido del array de id's
+    resultDisplay.textContent = cardsWon.length; //actualizo el resultado
+    if (cardsWon.length === cardArray.length / 2) {//Comparo el num de parejas obtenidas con el número de parejas totales
+      resultDisplay.textContent = "FELICIDADES! LAS ENCONTRASTE TODAS!";
     }
   }
 
   //flip your card
   function flipCard() {
-    let cardId = this.getAttribute("data-id");
-    cardsChosen.push(cardArray[cardId].name);
-    cardsChosenId.push(cardId);
+    let cardId = this.getAttribute("data-id"); // obtengo la id de mi carta
+    cardsChosen.push(cardArray[cardId].name); // Guardo el nombre en el array de nombres
+    cardsChosenId.push(cardId); //Guardo la id en el array de id's
     this.setAttribute("src", cardArray[cardId].img);
-    if (cardsChosen.length === 2) {
+    if (cardsChosen.length === 2) { //si he hecho dos veces click compruebo si las cartas son iguales y pongo un delay
       setTimeout(checkForMatch, 500);
     }
   }
 
-  createBoard();
+  createBoard(); //Llamo a iniciar el juego
 });
 
-/*
-  cardArray.sort(() => 0.5 - Math.random());
-
-  const grid =
-    document.querySelector(
-      ".grid"
-    ); /* asignamos a nuestra constante grid la clase .grid
- que corresponde a nuestro div 
-  const resultDisplay = document.querySelector("#result");
-  var cardsChosen = []; //Es un arrayd e nombre de cartas
-  var cardsChosenId = []; //Array con el ide de cada casilla
-  var cardsWon = []; // Array de pareja de cartas acertadas
-
-  /* Creamos el tablero 
-  function createBoard() {
-    for (let i = 0; i < cardArray.length(); i++) {
-      alert(i);
-      var card = document.createElement("img");
-      card.setAttribute("src", "img/blank.png");
-      card.setAttribute("data-id", i);
-      card.addEventListener("click", flipCard); //pongo una escucha en cada casilla
-      grid.appendChild(card);
-    }
-  }
-
-  function checkForMatch() {
-    var cards = document.querySelectorAll("img");
-    const optionOneId = cardsChosenId[0];
-    const optionTwoId = cardsChosenId[1];
-
-    //Comprobar si dos cartas son iguales
-    if (cardsChosen[0] === cardsChosen[1]) {
-      alert("Coincidencia Encontrada");
-      cards[optionOneId].setAttribute("src", "img/white.png"); //Si las cartas son iguales, las substitue por white
-      cards[optionTwoId].setAttribute("src", "img/white.png");
-    } else {
-      alert("Eres una patata con patas");
-      cards[optionOneId].setAttribute("src", "img/blank.png"); //Si las cartas son dieferentes, les doy la vuelta.
-      cards[optionTwoId].setAttribute("src", "img/blank.png");
-    }
-    cardsChosen = [];
-    cardsChosenId = [];
-    resultDisplay.textContent = cardsWon.length;
-    if (cardsWon.length === cardArray.length / 2) {
-      resultDisplay.textContent =
-        "FELICIDADES, NO ERES TAN IDIOTA COMO PARECÍAS";
-    }
-  }
-
-  function flipCard() {
-    var cardId = this.getAttribute("data-id"); //En qué casilla he hecho clic
-    cardsChosen.push(cardArray[cardId].name);
-    cardsChosenId.push(cardId);
-    this.setAttribute("src", cardArray[cardId].img); // Doy la vuelta a la carta elegida, ya no muestro blank sino su contenido
-    if (cardsChosen.length === 2) {
-      setTimeout(checkForMatch, 500); //Si ya he escogido 2 cartas, compruebo si hay coincidencia o no
-    }
-  }
-  createBoard();
-}); */
