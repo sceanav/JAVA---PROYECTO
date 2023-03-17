@@ -26,7 +26,7 @@ cardArray.sort(() => 0.5 - Math.random());
 
 const grid =
   document.querySelector(
-    ".grid)"
+    ".grid"
   ); /* asignamos a nuestra constante grid la clase .grid
  que corresponde a nuestro div */
 const resultDisplay = document.querySelector("#result");
