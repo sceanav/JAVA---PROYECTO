@@ -1,10 +1,10 @@
 //https://www.youtube.com/watch?v=lhNdUVh3qCc&t=115s
 // BUG EN EL TUTORIAL. SI HACES CLICK SOBRE LA CARTA DETAPADA TE SALE ACIERTO
 
-
 document.addEventListener("DOMContentLoaded", () => {
   //Se dispara antes de que el html haya acabado de cargar
-  const cardArray = [ //Creamos el array de cartas
+  const cardArray = [
+    //Creamos el array de cartas
     { name: "brocoli", img: "img/brocoli.png" },
     { name: "brocoli", img: "img/brocoli.png" },
     { name: "burrito", img: "img/burrito.png" },
@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
   cardArray.sort(() => 0.5 - Math.random()); //ordeno el Array de forma aleatoria
 
   const grid = document.querySelector(".grid"); //asigno el div grid a una variable para poder cambiar propiedades
-  const resultDisplay = document.querySelector("#result");//asigno el div con id result a una constante
-  let cardsChosen = [];//Array de nombres de las cartas elegidas
-  let cardsChosenId = [];//Array de id de cada carta (del 0 al 15)
-  let cardsWon = [];//Array de pareja acertada
+  const resultDisplay = document.querySelector("#result"); //asigno el div con id result a una constante
+  let cardsChosen = []; //Array de nombres de las cartas elegidas
+  let cardsChosenId = []; //Array de id de cada carta (del 0 al 15)
+  let cardsWon = []; //Array de pareja acertada
 
   //create your board
   function createBoard() {
@@ -48,15 +48,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const optionOneId = cardsChosenId[0];
     const optionTwoId = cardsChosenId[1];
 
-    if (optionOneId == optionTwoId) { //Si HAGO CLICK SOBRE LA CARTA DESTAPADA, LA VUELVE A TAPAR
+    if (optionOneId == optionTwoId) {
+      //Si HAGO CLICK SOBRE LA CARTA DESTAPADA, LA VUELVE A TAPAR
       cards[optionOneId].setAttribute("src", "img/blank.png");
       cards[optionTwoId].setAttribute("src", "img/blank.png");
       // alert("BIEN HECHO!");
-    } else if (cardsChosen[0] === cardsChosen[1]) {// Si las ID's son diferentes, pero el nombre es el mismo, he encontrado pareja
+    } else if (cardsChosen[0] === cardsChosen[1]) {
+      // Si las ID's son diferentes, pero el nombre es el mismo, he encontrado pareja
       alert("BIEN HECHO");
-      cards[optionOneId].setAttribute("src", "img/white.png"); //quito las fotos
+      cards[optionOneId].setAttribute("src", "img/white.png"); //quito las fotos del tablero
       cards[optionTwoId].setAttribute("src", "img/white.png");
-      cards[optionOneId].removeEventListener("click", flipCard);//quito la escucha, si hago click en el espacio en blanco, ya no pasa nada
+      cards[optionOneId].removeEventListener("click", flipCard); //quito la escucha, si hago click en el espacio en blanco, ya no pasa nada
       cards[optionTwoId].removeEventListener("click", flipCard);
       cardsWon.push(cardsChosen);
     } else {
@@ -67,7 +69,8 @@ document.addEventListener("DOMContentLoaded", () => {
     cardsChosen = []; //borro el contenido de array de nombres
     cardsChosenId = []; //borro el contenido del array de id's
     resultDisplay.textContent = cardsWon.length; //actualizo el resultado
-    if (cardsWon.length === cardArray.length / 2) {//Comparo el num de parejas obtenidas con el número de parejas totales
+    if (cardsWon.length === cardArray.length / 2) {
+      //Comparo el num de parejas obtenidas con el número de parejas totales
       resultDisplay.textContent = "FELICIDADES! LAS ENCONTRASTE TODAS!";
     }
   }
@@ -78,11 +81,11 @@ document.addEventListener("DOMContentLoaded", () => {
     cardsChosen.push(cardArray[cardId].name); // Guardo el nombre en el array de nombres
     cardsChosenId.push(cardId); //Guardo la id en el array de id's
     this.setAttribute("src", cardArray[cardId].img);
-    if (cardsChosen.length === 2) { //si he hecho dos veces click compruebo si las cartas son iguales y pongo un delay
+    if (cardsChosen.length === 2) {
+      //si he hecho dos veces click compruebo si las cartas son iguales y pongo un delay
       setTimeout(checkForMatch, 500);
     }
   }
 
   createBoard(); //Llamo a iniciar el juego
 });
-
