@@ -1,5 +1,4 @@
 //https://www.youtube.com/watch?v=lhNdUVh3qCc&t=115s
-// BUG EN EL TUTORIAL. SI HACES CLICK SOBRE LA CARTA DETAPADA TE SALE ACIERTO
 
 document.addEventListener("DOMContentLoaded", () => {
   //Se dispara antes de que el html haya acabado de cargar
