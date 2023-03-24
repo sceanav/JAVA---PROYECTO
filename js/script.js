@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     if (optionOneId == optionTwoId) {
       //Si HAGO CLICK SOBRE LA CARTA DESTAPADA, LA VUELVE A TAPAR
       cards[optionOneId].setAttribute("src", "img/blank.png");
-      cards[optionTwoId].setAttribute("src", "img/blank.png");
+      // cards[optionTwoId].setAttribute("src", "img/blank.png");
       // alert("BIEN HECHO!");
     } else if (cardsChosen[0] === cardsChosen[1]) {
       // Si las ID's son diferentes, pero el nombre es el mismo, he encontrado pareja
@@ -59,7 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
       cards[optionTwoId].setAttribute("src", "img/white.png");
       cards[optionOneId].removeEventListener("click", flipCard); //quito la escucha, si hago click en el espacio en blanco, ya no pasa nada
       cards[optionTwoId].removeEventListener("click", flipCard);
-      cardsWon.push(cardsChosen);
+      cardsWon.push(cardsChosen); //ponemos en cardswon
     } else {
       cards[optionOneId].setAttribute("src", "img/blank.png"); //si no son acierto, le doy la vuelta a las cartas
       cards[optionTwoId].setAttribute("src", "img/blank.png");
